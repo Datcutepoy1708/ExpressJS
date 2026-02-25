@@ -1,0 +1,48 @@
+extends ../../layout/default.pug 
+
+block main
+ if(role.permissions.includes("blog-view")) 
+   if(blogs.title)
+     h1(class="mb-4") !{blogs.title}
+  
+   if(blogs.description)
+     div(class="mb-4") 
+       strong Mô tả: 
+       div !{blogs.description}
+
+   if(blogs.content)
+     div(class="mb-4") 
+       strong Chi tiết: 
+       div !{blogs.content}
+   
+   if(blogs.thumbnail)
+     div(class="mb-4")
+       img(
+        src=blogs.thumbnail 
+        alt=blogs.title
+        style="width: 100px"
+       )
+    
+   if(blogs.status)
+     div(class="mb-4")
+       span Trạng thái: 
+       if (blogs.status === "active")
+         span(class="badge bg-success") Hoạt động
+       else 
+         span(class="badge bg-warning") Dừng hoạt động
+  
+   if(blogs.position)
+     div(class="mb-4") 
+       strong Vị trí: 
+       span #{blogs.position}
+
+   div(class="mt-4")
+     a(
+      href=`${prefixAdmin}/blog/edit/${blogs._id}`
+      class="btn btn-warning btn-sm me-2"
+     ) Chỉnh sửa
+     
+     a(
+      href=`${prefixAdmin}/blog`
+      class="btn btn-secondary btn-sm"
+     ) Quay lại

@@ -1,0 +1,13 @@
+extends ../../layout/default.pug 
+
+block main
+ if(role.permissions.includes("role-view")) 
+   if(data.title)
+     h1(class="mb-4") #{data.title}
+   if(data.description)
+     div(class="mb-4") Chi tiết: <b>!{data.description}</b>
+
+     a(
+        href=`${prefixAdmin}/roles/edit/${data._id}`
+        class="btn btn-warning btn-sm"
+     ) Chỉnh sửa

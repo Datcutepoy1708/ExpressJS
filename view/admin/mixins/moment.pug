@@ -1,0 +1,6 @@
+mixin formatDateTime(time)
+  
+  if time
+    span #{moment(time).format("DD/MM/YYYY h:mm:ss a")}
+  else
+    span.text-muted Không có thời gian

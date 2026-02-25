@@ -1,0 +1,36 @@
+.sider
+  .inner-menu 
+    ul 
+      li 
+        a(href=`${prefixAdmin}/dashboard`) Tổng quan 
+      if(role.permissions.includes("product-view"))
+       li 
+        a(href=`${prefixAdmin}/products`)  Danh sách sản phẩm
+      if(role.permissions.includes("product-category_view"))
+       li
+        a(href=`${prefixAdmin}/product-category`) Danh mục sản phẩm
+      if(role.permissions.includes("role-view"))
+       li 
+        a(href=`${prefixAdmin}/roles`) Nhóm quyền
+      if(role.permissions.includes("role-permissions"))
+       li 
+        a(href=`${prefixAdmin}/roles/permissions`) Phân quyền
+      if(role.permissions.includes("account-view"))
+       li 
+        a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
+      if(role.permissions.includes("blog-view"))
+       li 
+        a(href=`${prefixAdmin}/blog`) Danh sách bài viết
+      if(role.permissions.includes("blog-category_view"))
+       li 
+        a(href=`${prefixAdmin}/blog-category`) Danh mục bài viết
+      if(role.permissions.includes("order-view"))
+       li 
+        a(href=`${prefixAdmin}/order`) Quản lý đơn hàng
+      if(role.permissions.includes("setting-view") && role.permissions.includes("setting-edit"))
+       li 
+        a(href=`${prefixAdmin}/settings/general`) Cài đặt chung
+      if(role.permissions.includes("user-view") && role.permissions.includes("user-status"))
+       li 
+        a(href=`${prefixAdmin}/customer`) Quản lý người dùng
+        

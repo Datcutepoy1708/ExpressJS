@@ -1,0 +1,38 @@
+extends ../../layout/default.pug 
+include ../../mixins/select-tree.pug
+block main
+  if(role.permissions.includes("account-view")) 
+   h1 Thông tin chi tiết
+   if(data.fullName)
+     h2(class="mb-4") #{data.fullName}
+    
+   if(data.avatar)
+     div(class="mb-4")
+       img(
+        src=data.avatar
+        style="width: 100px"
+       )
+   if(data.email)
+      div(class="mb-4") Email: <b>!{data.email}</b>
+   if(data.phone)
+     div(class="mb-4") Số điện thoại: <b>!{data.phone}</b>
+   div(class="form-group")
+          label(for="role_id") Phân quyền 
+          select(disabled name="role_id" id="role_id" class="form-control")
+            each item in allRoles 
+             option(
+                value=item.id 
+                selected=(item.id==data.role_id ? true: false)
+             ) #{item.title} 
+   if(data.status)
+     div(class="mb-4")
+       span Trạng thái: 
+       if (data.status === "active")
+         span(class="btn btn-success") Hoạt động
+       else 
+         span(class="btn btn-danger") Dừng hoạt động   
+
+     a(
+      href=`${prefixAdmin}/accounts/edit/${data._id}`
+      class="btn btn-warning btn-sm"
+     ) Chỉnh sửa

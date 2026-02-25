@@ -1,0 +1,45 @@
+extends ../../layout/default.pug
+include ../../mixins/box-head.pug
+
+block main
+  .blog-detail
+    .container.my-5
+      .row
+        .col-8.mx-auto
+          // Tiêu đề bài viết
+          .blog-header.text-center.mb-4
+            if (blog.featured == "1")
+              .featured-badge.mb-3
+                span.badge.badge-warning.px-3.py-2 Bài viết nổi bật
+
+            h1.blog-title.mb-3 #{blog.title}
+
+            // Meta thông tin
+            .blog-meta.text-muted.mb-4
+              .row.justify-content-center
+                .col-auto
+                  i.fa.fa-calendar.me-2
+                  span #{new Date(blog.createdAt).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' })}
+
+                if (blog.category)
+                  .col-auto
+                    i.fa.fa-folder.me-2
+                    a.text-decoration-none(href=`/blogs/category/${blog.category.slug}`) #{blog.category.title}
+
+          // Ảnh đại diện
+          if (blog.thumbnail)
+            .blog-thumbnail.mb-4
+              img.img-fluid.rounded(src=blog.thumbnail alt=blog.title)
+
+          // Mô tả ngắn
+          if (blog.content)
+            .blog-description.mb-4
+              .alert.alert-light
+                p.lead.mb-0 !{blog.description}
+
+          hr.my-4
+
+          // Nội dung chính
+          .blog-content
+            +box-head("Nội dung bài viết")
+            .inner-content !{blog.content}

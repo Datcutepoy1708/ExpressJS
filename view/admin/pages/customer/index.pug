@@ -1,0 +1,73 @@
+extends ../../layout/default.pug 
+include ../../mixins/alert.pug 
+include ../../mixins/filter-status.pug 
+include ../../mixins/pagination.pug 
+include ../../mixins/search.pug 
+include ../../mixins/form-change-multi.pug 
+include ../../mixins/sort.pug 
+include ../../mixins/moment.pug 
+block main 
+  if(role.permissions.includes("user-view"))
+    +alert-success(5000)
+    h1 Danh sách các tài khoản user
+
+    .card.mb-3 
+      .card-header Bộ lọc và tìm kiếm 
+      .card-body 
+        .row 
+          .col-6 
+            +filter-status(filterStatus)
+          .col-6 
+            +search(keyword)
+    
+    .card.mb-3 
+      .card-header Sắp xếp 
+      .card-body 
+        .row 
+          .col-4 
+            +sort()
+        table.table.table-hover.table-sm(checkbox-multi)
+          thead 
+            tr 
+              th 
+                input(type="checkbox" name="checkall")
+              th STT 
+              td Id người dùng 
+              th Tên người dùng 
+              th Email người dùng 
+              th Trạng thái 
+          tbody 
+            each item,index in customer 
+              tr 
+                td
+                  input(
+                    type="checkbox"
+                    name="id"
+                    value=item._id
+                  )
+                td #{pagination.limitItems*(pagination.currentPage-1)+(index+1)}
+                td #{item._id}
+                td #{item.fullName}
+                td #{item.email} 
+                td 
+                  if item.status == "active"
+                    a.badge.bg-success(
+                      href="javascript:;"
+                      data-status=item.status 
+                      data-id=item._id 
+                      button-change-status
+                    ) Kích hoạt 
+                  else 
+                    a.badge.bg-warning(
+                      href="javascript:;"
+                      data-status=item.status 
+                      data-id=item._id 
+                      button-change-status
+                    ) Vô hiệu
+        +pagination(pagination)
+        form#form-change-status(
+          action=""
+          method="POST"
+          data-path=`${prefixAdmin}/customer/change-status` 
+        )
+      script(src="/admin/js/customer.js")
